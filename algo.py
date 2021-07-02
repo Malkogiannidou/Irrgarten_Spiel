@@ -1,19 +1,24 @@
 # coding=utf-8
 import copy
+import random
+import typing
+import pygame
+
+import konstanten
 import model
-from model import *
+
 
 class MazeGenerator(object):
     def __init__(self, y_Achse: int, x_Achse: int, kantenlaenge: int):
         self.y_Achse: int = y_Achse
         self.x_Achse: int = x_Achse
         self.kantenlaenge: int = kantenlaenge
-        self.startKy: int  = random.randint(0, y_Achse - 1)
-        self.startKx: int  = random.randint(0, x_Achse - 1)
+        self.startKy: int = random.randint(0, y_Achse - 1)
+        self.startKx: int = random.randint(0, x_Achse - 1)
         self.maze: model.Maze = model.Maze(self.y_Achse, self.x_Achse, kantenlaenge)
-        self.labyrinth: typing.List[typing.List[model.Koordinate]]= self.maze.labyrinth
+        self.labyrinth: typing.List[typing.List[model.Koordinate]] = self.maze.labyrinth
         self.spanning3: dict = {}
-        self.stack: model.Stack = model.Stack()
+        self.stack:  model.Stack = model.Stack()
         self.createWalls()
         self.createMaze(self.labyrinth[self.startKy][self.startKx])
 
@@ -102,7 +107,7 @@ class MazeGenerator(object):
 
 class PathFinder(object):
     """Der Pathfinder berechnet und markiert den Lösungpfad von der akt. Position des Spielers bis zum Ziel."""
-    def __init__(self, mazerator: MazeGenerator, player: model.Player, isDoPathFinder: bool =True):
+    def __init__(self, mazerator: MazeGenerator, player: model.Player, isDoPathFinder: bool = True):
         """
         Initialisiert alle Attribute der Klasse und ruft die Funktionen findPath() sowie solutionPath2Labyrinth() auf
 
@@ -180,7 +185,7 @@ class PathFinder(object):
             cell.solutionMarker = None
 
     @staticmethod
-    def calculateRect(k: Koordinate) -> pygame.Rect:
+    def calculateRect(k: model.Koordinate) -> pygame.Rect:
         """
         Berechnet ein pygame.Rect Feld für die Ausgabe des Lösungspfads und spanning3
 
