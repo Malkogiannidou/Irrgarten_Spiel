@@ -128,7 +128,7 @@ class PathFinder(object):
         if isDoPathFinder:
             self.validPath: dict = copy.deepcopy(mazerator.spanning3)
             self.labyrinth = mazerator.labyrinth
-            self.player: model.Player = player
+            self.player = player
             self.findPath()
             self.solutionPath2Labyrinth()
 
