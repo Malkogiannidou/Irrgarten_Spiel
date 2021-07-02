@@ -15,9 +15,9 @@ class MazeGenerator(object):
         self.startKy: int = random.randint(0, y_Achse - 1)
         self.startKx: int = random.randint(0, x_Achse - 1)
         self.maze = model.Maze(y_Achse, x_Achse, kantenlaenge)
-        self.labyrinth: typing.List[typing.List[model.Koordinate]] = self.maze.labyrinth
+        self.labyrinth = self.maze.labyrinth   
         self.spanning3: dict = {}
-        self.stack:  model.Stack = model.Stack()
+        self.stack = model.Stack()
         self.createWalls()
         self.createMaze(self.labyrinth[self.startKy][self.startKx])
 
@@ -124,10 +124,10 @@ class PathFinder(object):
         :param isDoPathFinder: True, wenn Lösungspfad berechnet werden soll, sonst False.
         :type isDoPathFinder:  bool
         """
-        self.stack: model.Stack = model.Stack()  # der Lösungspfad
+        self.stack = model.Stack()  # der Lösungspfad
         if isDoPathFinder:
             self.validPath: dict = copy.deepcopy(mazerator.spanning3)
-            self.labyrinth: typing.List[typing.List[model.Koordinate]] = mazerator.labyrinth
+            self.labyrinth = mazerator.labyrinth
             self.player: model.Player = player
             self.findPath()
             self.solutionPath2Labyrinth()
