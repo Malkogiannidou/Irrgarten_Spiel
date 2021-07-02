@@ -1,7 +1,6 @@
 # coding=utf-8
 import copy
 import model
-from typing import *
 from model import *
 
 class MazeGenerator(object):
@@ -11,8 +10,8 @@ class MazeGenerator(object):
         self.kantenlaenge: int = kantenlaenge
         self.startKy: int  = random.randint(0, y_Achse - 1)
         self.startKx: int  = random.randint(0, x_Achse - 1)
-        self.maze: Maze = model.Maze(self.y_Achse, self.x_Achse, kantenlaenge)
-        self.labyrinth = self.maze.labyrinth
+        self.maze: model.Maze = model.Maze(self.y_Achse, self.x_Achse, kantenlaenge)
+        self.labyrinth: typing.List[typing.List[model.Koordinate]]= self.maze.labyrinth
         self.spanning3: dict = {}
         self.stack: model.Stack = model.Stack()
         self.createWalls()
@@ -103,7 +102,7 @@ class MazeGenerator(object):
 
 class PathFinder(object):
     """Der Pathfinder berechnet und markiert den Lösungpfad von der akt. Position des Spielers bis zum Ziel."""
-    def __init__(self, mazerator:MazeGenerator, player:model.Player, isDoPathFinder=True):
+    def __init__(self, mazerator: MazeGenerator, player: model.Player, isDoPathFinder: bool =True):
         """
         Initialisiert alle Attribute der Klasse und ruft die Funktionen findPath() sowie solutionPath2Labyrinth() auf
 
@@ -124,7 +123,7 @@ class PathFinder(object):
         self.stack: model.Stack = model.Stack()  # der Lösungspfad
         if isDoPathFinder:
             self.validPath: dict = copy.deepcopy(mazerator.spanning3)
-            self.labyrinth: List[List[Koordinate]] = mazerator.labyrinth
+            self.labyrinth: typing.List[typing.List[model.Koordinate]] = mazerator.labyrinth
             self.player: model.Player = player
             self.findPath()
             self.solutionPath2Labyrinth()
@@ -181,7 +180,7 @@ class PathFinder(object):
             cell.solutionMarker = None
 
     @staticmethod
-    def calculateRect(k: Koordinate) ->pygame.Rect:
+    def calculateRect(k: Koordinate) -> pygame.Rect:
         """
         Berechnet ein pygame.Rect Feld für die Ausgabe des Lösungspfads und spanning3
 
