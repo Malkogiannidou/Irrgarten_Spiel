@@ -15,7 +15,7 @@ class MazeGenerator(object):
         self.kantenlaenge: int = kantenlaenge
         self.startKy: int = random.randint(0, y_Achse - 1)
         self.startKx: int = random.randint(0, x_Achse - 1)
-        self.maze: model.Maze = model.Maze(self.y_Achse, self.x_Achse, kantenlaenge)
+        self.maze: model.Maze = model.Maze(y_Achse, x_Achse, kantenlaenge)
         self.labyrinth: typing.List[typing.List[model.Koordinate]] = self.maze.labyrinth
         self.spanning3: dict = {}
         self.stack:  model.Stack = model.Stack()
