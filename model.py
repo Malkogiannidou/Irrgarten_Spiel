@@ -3,7 +3,7 @@ import pygame
 import random
 import typing
 import konstanten
-from konstanten import *
+
 
 class Koordinate(object):
     """Die Eigenschaften (Attribute) beinhalten u.a. horizontale und/oder vertikale Kante, Start- oder Ziel-Feld,...
@@ -252,13 +252,13 @@ class Maze(object):
         :rtype: str
         """
         zeichenCode =  "1" if 'h' in self.labyrinth[ky][kx].kanten \
-                  else "0"
+                  else "0"  # type: str
         zeichenCode += "1" if 'v' in self.labyrinth[ky][kx].kanten \
-                  else "0"
+                  else "0"  # type: str
         zeichenCode += "1" if (self.isValid(ky, kx - 1) and 'h' in self.labyrinth[ky][kx - 1].kanten) \
-                  else "0"
+                  else "0"  # type: str
         zeichenCode += "1" if (self.isValid(ky - 1, kx) and 'v' in self.labyrinth[ky - 1][kx].kanten) \
-                  else "0"
+                  else "0"  # type: str
         #           ┏→ Rand unten     ┏→ 1.EckeUntenLinks   ┏→  2.Sonderfall          ┏→ 3.S.fall
         if (ky == self.yAchse and not kx == 0) and (zeichenCode == '1000' or zeichenCode == '1001'):
            #        ┏→'━' if ↓    GLEICH ↓   ┏→'╺' ┏ELSE  ┏→'┻'     ┗→'━'                    ┗→'┗',
@@ -288,12 +288,12 @@ class Player(object):
         :param spanningTree: Der Spannbaum aus MazeGenerator.spanningTree
         :type spanningTree: Dict
         """
-        self.currentKy, self.zielKy, self.currentKx, self.zielKx = 0, 0, 0, 0
+        self.currentKy, self.zielKy, self.currentKx, self.zielKx = 0, 0, 0, 0  # type: int, int, int, int
         """ Die aktuelle Spielerposition oder Zielfeldposition."""
 
         while (self.currentKy, self.currentKx) == (self.zielKy, self.zielKx):
-            self.currentKy, self.zielKy = random.randint(0, y_achse - 1), random.randint(0, y_achse - 1)
-            self.currentKx, self.zielKx = random.randint(0, x_achse - 1), random.randint(0, x_achse - 1)
+            self.currentKy, self.zielKy = random.randint(0, y_achse - 1), random.randint(0, y_achse - 1)  # type: int, int
+            self.currentKx, self.zielKx = random.randint(0, x_achse - 1), random.randint(0, x_achse - 1)  # type: int, int
             
         self.spanningTree = spanningTree
         """Der Spannbaum, der zur Überprüfung der Spielerbewegung gebraucht wird."""
@@ -331,7 +331,7 @@ class Player(object):
         :param kx: Der Spalten-Index des inneren Arrays des 2D-Arrayliste labyrinth der Klasse Maze
         :type kx: int
         """
-        self.currentKy, self.currentKx = ky, kx
+        self.currentKy, self.currentKx = ky, kx  # type: int, int
 
     def getPos(self) -> typing.Tuple[int, int]:
         """ Gibt die aktuelle Spieler-Position, wo sich der Spieler im Labyrinth befindet, zurück.
@@ -345,7 +345,7 @@ class Player(object):
 class Stack(object):
     def __init__(self) -> None:
         """ Initialisiert eine leere Arrayliste als Datenspeicher """
-        self.liste = []  # type: list
+        self.liste: typing.List = []
         """ Der Datenspeicher des Stacks."""
 
     def push(self, koordinate: Koordinate) -> None:
