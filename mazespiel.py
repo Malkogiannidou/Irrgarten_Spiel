@@ -10,7 +10,7 @@ import pygame.surface
 import re
 import sys
 import time
-from typing import *
+import typing
 
 import algo
 import konstanten
@@ -24,7 +24,7 @@ class MazeSpiel:
         # Pygame init, Anzeigemodus m. ggf. Größenberechnung, Bildschirmfläche, FPS
         pygame.init()
         self.flags = screentype                                 # type: int
-        self.screenSize = konstanten.SCREENSIZE                 # type: Tuple[int, int]
+        self.screenSize = konstanten.SCREENSIZE                 # type: typing.Tuple[int, int]
         if self.flags == pygame.locals.RESIZABLE:                             # DAS ↓ IST FALSCH! hier müsste...
                                                              # ...normalerweise die ↓ berechnete kantenlaenge stehen.
             self.screenSize =(2 * konstanten.FENSTER_RAND_ABSTAND + x_Achse * konstanten.LAENGE + konstanten.HOEHE),\
@@ -37,15 +37,15 @@ class MazeSpiel:
 
         # Labyrinth, Wandfarbe, Spannbaum (spanning3, sp3)
         self.mazerator:algo.MazeGenerator = maze_generator
-        self.labyrinth:List[List[model.Koordinate]] = maze_generator.labyrinth
-        self.kantenfarbe:Tuple[Tuple[int, int, int], Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_1) 
-        self.spanning3_1stKey = maze_generator.startKy, maze_generator.startKx  # type: Tuple[int, int]
+        self.labyrinth: typing.List[typing.List[model.Koordinate]] = maze_generator.labyrinth
+        self.kantenfarbe:typing.Tuple[typing.Tuple[int, int, int], typing.Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_1)
+        self.spanning3_1stKey = maze_generator.startKy, maze_generator.startKx  # type: typing.Tuple[int, int]
         self.sp3_ykey, self.sp3_xkey, self.sp3copy = 0,0,None   # type: int,int, None
 
         # Player, Index-Modifikatoren für Spielerbewegungsrichtung, pathFinder init
         self.player:model.Player     = player
         self.startKy, self.startKx = self.player.currentKy, self.player.currentKx    # type: int, int
-        self.directions: Dict[str, Tuple[int, int]] = {'right':(0, 1), 'left':(0, -1), 'down':(1, 0), 'up':(-1, 0)}
+        self.directions: typing.Dict[str, typing.Tuple[int, int]] = {'right':(0, 1), 'left':(0, -1), 'down':(1, 0), 'up':(-1, 0)}
         self.pathFinder = None                                  # type: None or algo.PathFinder
 
         # Boolean-Switch, Counter-Variablen und solutionSize (Lösungspfadlänge) init
@@ -55,12 +55,12 @@ class MazeSpiel:
         self.solutionSize, self.gTasteCount = 0, 0              # type: int, int
 
         # Menüvorbereitung, Überschreiben der entsprechenden Marker der jeweiligen Koordinaten-Instanzen
-        self.menuText_ImageList = self.initMenu()  # type:  List[pygame.surface.Surface]
+        self.menuText_ImageList = self.initMenu()  # type:  typing.List[pygame.surface.Surface]
         self.markStart_Ziel(self.player.currentKy, self.player.currentKx, konstanten.STARTCOLER)
         self.markStart_Ziel(self.player.zielKy, self.player.zielKx, konstanten.ZIELCOLER)
 
     @staticmethod
-    def initMenu() -> List[pygame.surface.Surface]:                                                 # Menü-Init
+    def initMenu() -> typing.List[pygame.surface.Surface]:                                                 # Menü-Init
         """
         Vorberetiung für die spätere Anzeige des Menüs durch das Rendern der Menüzeilen zu einem Bild.
 
@@ -89,7 +89,7 @@ class MazeSpiel:
                                                                     True, infoColor)]
         return text_Images
 
-    def markStart_Ziel(self, ky: int, kx: int, farbe: Tuple[int, int, int]) -> None:
+    def markStart_Ziel(self, ky: int, kx: int, farbe: typing.Tuple[int, int, int]) -> None:
         """
         Überschreibt den Feldmarker im Labyrinth mit pygame.Rect-Objekt, und speichert dessen Farbe ab.
 
@@ -374,9 +374,9 @@ class MazeSpiel:
         """
         self.is2farbig: bool = not self.is2farbig
         if self.is2farbig:
-            self.kantenfarbe: Tuple[Tuple[int, int, int], Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_2)
+            self.kantenfarbe: typing.Tuple[typing.Tuple[int, int, int], typing.Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_2)
         else:
-            self.kantenfarbe: Tuple[Tuple[int, int, int], Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_1)
+            self.kantenfarbe: typing.Tuple[typing.Tuple[int, int, int], typing.Tuple[int, int, int]] = (konstanten.WALLCOLOR_1, konstanten.WALLCOLOR_1)
 
 
 class Konsole(object):
@@ -439,7 +439,7 @@ class Konsole(object):
 
             # P L A Y E R  I N S T A N Z I I E R U N G + Start/Ziel Markierung
             player: model.Player = model.Player(self.yAchse, self.xAchse, self.mazerator.spanning3)
-            labyrinth: List[List[model.Koordinate]] = self.mazerator.labyrinth
+            labyrinth: typing.List[typing.List[model.Koordinate]] = self.mazerator.labyrinth
             labyrinth[player.currentKy][player.currentKx].marker = "PLAY"
             labyrinth[player.zielKy][player.zielKx].marker = "END "
 
@@ -536,7 +536,7 @@ class Konsole(object):
                 print(konstanten.TOO_MANY_VALUE_ERRMSG)
 
 
-def getValidation_and_config(yAchse: int, xAchse: int) -> Union[Tuple[bool,int,int,int,int],Tuple[bool,int,int,None,None]]:  # Achsenwert Validierung
+def getValidation_and_config(yAchse: int, xAchse: int) -> typing.Union[typing.Tuple[bool,int,int,int,int],typing.Tuple[bool,int,int,None,None]]:  # Achsenwert Validierung
     """ Validiert Benutzereingabe, berechnet die kantenlänge einer Labyrinthwand und entscheidet über den Anzeige Modus.
 
     :return: Gibt Validierung, y- ,x-Achsenwert, Kantenlänge und AnzeigeModus zurück.
